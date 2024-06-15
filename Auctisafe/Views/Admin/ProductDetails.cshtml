@@ -1,0 +1,224 @@
+﻿@model Auctisafe.ViewModel.ProductDetailsViewModel
+@{
+    ViewBag.Title = "ProductDetails";
+}
+<style>
+    p {
+        font-size: 20px;
+    }
+</style>
+
+<h3>Auctioneer Details</h3>
+<div class="card">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Full Name
+                </th>
+                <th>Phone Number</th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+            <tr>
+
+                <td>@Model.AuctioneerDetail.First_name @Model.AuctioneerDetail.Last_name</td>
+                <td>@Model.AuctioneerDetail.Phone_number</td>
+                <td>@Model.AuctioneerDetail.Address</td>
+                <td>
+                    <a type="button" href="~/Admin/Userdetail?id=@Model.AuctioneerDetail.User_ID" class="btn btn-secondary btn-sm">Details & Update</a>
+                </td>
+            </tr>
+
+
+        </thead>
+    </table>
+</div>
+<br />
+<div style="width: 100%; display: flex; justify-content : space-between; background-color: white; padding: 10px">
+    <h3>Product Details</h3>
+    @if (Model.status.Status == "A")
+    {
+        <button class="btn btn-danger btn-sm deactivate" id="@Model.product.Product_ID">Deactivate Auction</button>
+    }
+    else
+    {
+        <button class="btn btn-success btn-sm Activate" id="@Model.product.Product_ID">Activate Auction</button>
+    }
+
+</div>
+<br />
+<div class="card" style="padding: 10px">
+    <div class="row">
+
+        <div class="col-md-7">
+            <p style="font-size: 18px">Product Name : <b>@Model.product.name</b></p>
+            <p style="font-size: 18px">Used Status : <b>@Model.product.used</b></p>
+            <p style="font-size: 18px">Price : <b>@Model.product.price</b></p>
+            <p style="font-size: 18px">Description : <b>@Model.product.description</b></p>
+            <p style="font-size: 18px">Product Status : <b>@Model.status.Status</b></p>
+
+        </div>
+        <div class="col-md-5">
+            <img src="~/images/@Model.product.image" style="width: 100%" />
+
+        </div>
+    </div>
+
+</div>
+<br />
+ 
+<div class="card" style="padding: 10px">
+    <h3>Auction Status Tracking</h3>
+</div>
+<br />
+<div class="card">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Prodcut ID</th>
+                    <th>Product Name</th>
+                    <th>Product Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.product.Product_ID</td>
+                    <td>@Model.product.name</td>
+                    <td>
+                        @if (Model.status.Status == "A")
+                        {
+                            <p style="font-size: 18px">Product Is Activated, Bidding in process</p>
+                        }
+                        @*Deactive*@
+                        else if (Model.status.Status == "D")
+                        {
+                            <p style="font-size: 18px">Product Is Deavtivated By AuctiSafe</p>
+                        }
+                        @*agreement*@
+                        else if (Model.status.Status == "C")
+                        {
+                            <p style="font-size: 18px">Auction is Close</p>
+                        }
+                        else if (Model.status.Status == "P")
+                        {
+                            <p style="font-size: 18px">Payment Recived, Agreement Pending</p>
+                        }
+                        else if (Model.status.Status == "W")
+                        {
+                            <p style="font-size: 18px">Bid Winner Dectected, Payment Pending</p>
+                        }
+                        else
+                        {
+                            <p style="font-size: 18px"> Sorry </p>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+        <br />
+ </div>
+<br />
+<div class="card" style="padding: 10px">
+    <h3>Auction Details</h3>
+</div>
+<br />
+<div class="card" style="padding: 10px">
+    <div class="row">
+        <div class="col-md-4">
+            <p style="font-size: 18px">Start Date : <b>@Model.auction.Start_date</b></p>
+        </div>
+        <div class="col-md-4">
+            <p style="font-size: 18px">End Date : <b>@Model.auction.End_date</b></p>
+        </div>
+        <div class="col-md-4">
+            <p style="font-size: 18px">Increment : <b>@Model.auction.increament</b></p>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <p style="font-size: 18px">Decreament : <b>@Model.auction.decreament</b></p>
+        </div>
+        <div class="col-md-4">
+            <p style="font-size: 18px">Auto Accept Amount : <b>@Model.auction.auto_accept_amount</b></p>
+        </div>
+        <div class="col-md-4">
+            <p style="font-size: 18px">Interval In Hours : <b>@Model.auction.IntervalinHours</b></p>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <p style="font-size: 18px">Updated Price : <b>@Model.auction.UpdatedPrice</b></p>
+        </div>
+        <div class="col-md-4">
+            <p style="font-size: 18px">Current Date : <b>@Model.auction.currentdate</b></p>
+        </div>
+
+    </div>
+</div>
+<br />
+<div class="card" style="padding: 10px">
+    <h3>Biddings</h3>
+</div>
+<br />
+<div class="card">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Bidder Name</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var items in Model.biddingdetails)
+            {
+                <tr>
+                    <td>@items.bidder.First_name @items.bidder.Last_name</td>
+                    <td>@items.bidding.Amount</td>
+                    <td>@items.bidding.Date</td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" type="button" href="~/Admin/RollBackBid?id=@items.bidding.Bid_ID">Rollback Bid</a>
+                        <a class="btn btn-secondary btn-sm" type="button" href="~/Admin/UserDetail?id=@items.bidder.User_ID">Bidder Detail</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(".deactivate").click(function () {
+        var id = $(this).attr('id');
+        $.ajax({
+            type: "get",
+            url: '@Url.Action("DeactivateProduct","Admin")',
+            data: { productid: id },
+            success: function (data) {
+                location.reload();
+            }
+        })
+    })
+    $(".Activate").click(function () {
+        var id = $(this).attr('id');
+        $.ajax({
+            type: "get",
+            url: '@Url.Action("ActivateProduct","Admin")',
+            data: { productid: id },
+            success: function (data) {
+                location.reload();
+            }
+        })
+    })
+</script>

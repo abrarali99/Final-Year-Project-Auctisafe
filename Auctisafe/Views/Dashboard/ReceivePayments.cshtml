@@ -1,0 +1,115 @@
+﻿@model List<Auctisafe.ViewModel.ReceivePaymentVewmodel>
+
+@{
+    ViewBag.Title = "Pending Payments";
+}
+<div>
+    <div class="inner-banner">
+        <div class="container">
+            <h2 class="inner-banner-title wow fadeInLeft" data-wow-duration="1.5s" data-wow-delay=".2s">
+                My account
+            </h2>
+            <nav aria-label="breadcrumb">
+                <ul id="breadcrumb" class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="https://www.bidout-wp.egenslab.com"> Home </a></li>
+                    <li class="active">My account</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="page-wrapper sec-mar">
+        <div class="container">
+            <article id="post-1408" class="post-1408 page type-page status-publish hentry">
+                <div class="inner-post">
+                    <div class="woocommerce">
+                        <nav class="woocommerce-MyAccount-navigation">
+                            <ul>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard is-active">
+                                    @Html.ActionLink("Dashboard", "Index")
+                                </li>
+
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account">
+                                    @Html.ActionLink("Account Details", "details")
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auctions-endpoint">
+                                    @Html.ActionLink("Create Auction", "Create_Auction")
+                                </li>
+
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-watchlist">
+                                    @{
+                                        int x = Convert.ToInt32(Session["productCount"]);
+                                        @Html.ActionLink("My Auctions (" + x + ")", "myauctions");
+                                    }
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                    <a href="~/Dashboard/PaymentCredentials">Payment Credentials</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                    <a href="~/Dashboard/PendingPayments">Pending Payments (Have to Pay)</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction">
+                                    <a href="~/Dashboard/ReceivePayments">Pending Payments (Have to Receive)</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--won-auction">
+                                    <a href="~/Dashboard/Agreement">Recieve / Deliver Agreement</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--active-auction">
+                                    <a href="~/Dashboard/tracking">Product Tracking</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--auction-activity">
+                                    <a href="">Auction Activity</a>
+                                </li>
+                                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
+                                    @Html.ActionLink("Logout", "logout")
+                                </li>
+                            </ul>
+                        </nav>
+
+
+                        <div class="woocommerce-MyAccount-content">
+                            <div class="woocommerce-notices-wrapper"></div>
+                            <p class="display-name">
+
+                            </p>
+
+                            <p>
+                                Receive Payments will Appear here,
+
+                            </p>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Product name</th>
+                                        <th>Total Amount</th>
+                                        <th>Tax</th>
+                                        <th>Auction Fees</th>
+                                        <th>Net Amount (you will receive)</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td hidden id="proid">@item.Products.Product_ID</td>
+                                            <td>@item.Products.name</td>
+                                            <td>@item.totalamount</td>
+                                            <td>@item.tax</td>
+                                            <td>@item.fees</td>
+                                            <td>@item.netamount</td>
+                                            
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div> <!-- end .container -->
+    </div>
+
+</div>
